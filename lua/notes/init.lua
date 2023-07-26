@@ -11,7 +11,7 @@ end
 
 function M.make_commands()
     vim.cmd [[command! -nargs=* Note lua require("notes").open(<f-args>)]]
-    vim.cmd [[command! NoteNow lua require("notes").now()]]
+    vim.cmd [[command! NoteToday lua require("notes").today()]]
     vim.cmd [[command! NoteNext lua require("notes").next()]]
     vim.cmd [[command! NotePrev lua require("notes").prev()]]
 end
@@ -23,7 +23,7 @@ function M.open(note_name, _)
     vim.cmd("e" .. config.note_dir .. note_name .. ".md")
 end
 
-function M.now()
+function M.today()
     local filename = os.date("%Y-%m-%d")
     vim.cmd("e" .. config.note_dir .. filename .. ".md")
 end
