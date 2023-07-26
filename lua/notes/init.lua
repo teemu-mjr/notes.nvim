@@ -14,6 +14,7 @@ function M.make_commands()
     vim.cmd [[command! NoteToday lua require("notes").today()]]
     vim.cmd [[command! NoteNext lua require("notes").next()]]
     vim.cmd [[command! NotePrev lua require("notes").prev()]]
+    vim.cmd [[command! NoteSync lua require("notes").sync()]]
 end
 
 function M.open(note_name, _)
@@ -52,6 +53,20 @@ function M.prev()
         filename = os.date("%Y-%m-%d", current_time - day)
     end
     vim.cmd("e" .. config.note_dir .. filename .. ".md")
+end
+
+function M.sync()
+    if (config.git_remote == nil) then
+        return print("Git remote not set")
+    end
+
+    vim.cmd(
+        "!cd " .. config.note_dir .. " ;" ..
+        "git pull;" ..
+        "git add .;" ..
+        "git commit -m 'sync';" ..
+        "git push;"
+    )
 end
 
 return M
