@@ -10,15 +10,17 @@ function M.setup(user_config)
 end
 
 function M.make_commands()
-    vim.cmd [[command! -nargs=1 NoteNew lua require("notes").new(<f-args>)]]
+    vim.cmd [[command! -nargs=* Note lua require("notes").open(<f-args>)]]
     vim.cmd [[command! NoteNow lua require("notes").now()]]
     vim.cmd [[command! NoteNext lua require("notes").next()]]
     vim.cmd [[command! NotePrev lua require("notes").prev()]]
 end
 
-function M.new(note_name)
-    local filename = os.date("%Y-%m-%d") .. "_" .. note_name
-    vim.cmd("e" .. config.note_dir .. filename .. ".md")
+function M.open(note_name, _)
+    if (note_name == nil) then
+        return vim.cmd("e" .. config.note_dir)
+    end
+    vim.cmd("e" .. config.note_dir .. note_name .. ".md")
 end
 
 function M.now()
