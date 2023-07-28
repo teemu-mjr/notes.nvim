@@ -1,12 +1,23 @@
 local commands = require("notes.commands")
+local config = require("notes.config")
+local logger = require("notes.logger")
 local M = {}
 
+local did_setup = false
+
 function M.setup(user_config)
-    config = user_config
-    if config.note_dir == nil then
-        return
+    if did_setup then
+        logger.info("Already did setup!")
+    end
+    did_setup = true
+
+    if user_config ~= nil then
+        config = vim.tbl_deep_extend("force", config, user_config)
     end
 
+    if config.note_dir == nil then
+        return logger.info("Note directory is nil!")
+    end
     commands.setup()
 end
 
