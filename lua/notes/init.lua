@@ -48,7 +48,7 @@ end
 
 function M.sync()
     if config.git_remote == nil then
-        return print("Git remote not set")
+        return logger.error("Git remote not set!")
     end
 
     vim.cmd(
