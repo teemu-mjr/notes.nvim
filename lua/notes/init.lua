@@ -1,20 +1,13 @@
-M = {}
-local config = {}
+local commands = require("notes.commands")
+local M = {}
 
 function M.setup(user_config)
     config = user_config
     if config.note_dir == nil then
         return
     end
-    M.make_commands()
-end
 
-function M.make_commands()
-    vim.cmd [[command! -nargs=* Note lua require("notes").open(<f-args>)]]
-    vim.cmd [[command! NoteToday lua require("notes").today()]]
-    vim.cmd [[command! NoteNext lua require("notes").change_day(1)]]
-    vim.cmd [[command! NotePrev lua require("notes").change_day(-1)]]
-    vim.cmd [[command! NoteSync lua require("notes").sync()]]
+    commands.setup()
 end
 
 function M.open(filename, _)
