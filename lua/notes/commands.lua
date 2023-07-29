@@ -1,11 +1,27 @@
 local M = {}
 
 function M.setup()
-    vim.cmd [[command! -nargs=* Note lua require("notes").open(<f-args>)]]
-    vim.cmd [[command! NoteToday lua require("notes").today()]]
-    vim.cmd [[command! NoteNext lua require("notes").change_day(1)]]
-    vim.cmd [[command! NotePrev lua require("notes").change_day(-1)]]
-    vim.cmd [[command! NoteSync lua require("notes").sync()]]
+    vim.api.nvim_create_user_command(
+        "Note",
+        function(opts)
+            require("notes").open(opts.fargs[1])
+        end, {
+            nargs = "?",
+        })
+    vim.api.nvim_create_user_command(
+        "NoteToday", require("notes").today, {})
+    vim.api.nvim_create_user_command(
+        "NoteNext",
+        function()
+            require("notes").change_day(1)
+        end, {})
+    vim.api.nvim_create_user_command(
+        "NotePrev",
+        function()
+            require("notes").change_day(-1)
+        end, {})
+    vim.api.nvim_create_user_command(
+        "NoteSync", require("notes").sync, {})
 end
 
 return M
