@@ -7,12 +7,12 @@ local did_setup = false
 
 function M.setup(user_config)
     if did_setup then
-        logger.info("Already did setup!")
+        return logger.info("Already did setup!")
     end
     did_setup = true
 
     if user_config ~= nil then
-        config = vim.tbl_deep_extend("force", config, user_config)
+        config.extend_config(user_config)
     end
 
     if config.note_dir == nil then
