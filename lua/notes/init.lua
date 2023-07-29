@@ -21,16 +21,16 @@ function M.setup(user_config)
     commands.setup()
 end
 
-function M.open(filename, _)
+function M.open(filename)
     if filename == nil then
-        return vim.cmd("e" .. config.note_dir)
+        return vim.cmd.edit(config.note_dir)
     end
-    vim.cmd("e" .. config.note_dir .. filename .. ".md")
+    vim.cmd.edit(config.note_dir .. filename .. ".md")
 end
 
 function M.today()
     local filename = os.date("%Y-%m-%d")
-    vim.cmd("e" .. config.note_dir .. filename .. ".md")
+    vim.cmd.edit(config.note_dir .. filename .. ".md")
 end
 
 function M.change_day(amount)
@@ -43,7 +43,7 @@ function M.change_day(amount)
         local current_time = os.time({ year = y, month = m, day = d })
         filename = os.date("%Y-%m-%d", current_time + change_amount)
     end
-    vim.cmd("e" .. config.note_dir .. filename .. ".md")
+    vim.cmd.edit(config.note_dir .. filename .. ".md")
 end
 
 function M.sync()
